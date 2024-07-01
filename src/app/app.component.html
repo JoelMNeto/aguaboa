@@ -1,1 +1,6 @@
-<app-header></app-header>
+<app-header [title]="title" (onClickToggle)="onClickToggle()"></app-header>
+
+<app-sidenav
+  (selectedItem)="changeTitle($event)"
+  (setOpenedValueFn)="setSidenavOpen = $event"
+></app-sidenav>
