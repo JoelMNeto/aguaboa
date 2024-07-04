@@ -1,6 +1,13 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="header">
   <mat-toolbar-row>
-    <h4>{{ title }}</h4>
-    <button mat-button (click)="onClick()"><mat-icon>menu</mat-icon></button>
+    <button mat-button (click)="onClick()">
+      <div class="d-flex justify-content-center">
+        <mat-icon>menu</mat-icon>
+      </div>
+    </button>
+
+    <div class="header-title">
+      <h4>{{ title }}</h4>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

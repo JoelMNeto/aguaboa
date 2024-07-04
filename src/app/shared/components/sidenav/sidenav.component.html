@@ -1,16 +1,8 @@
-<mat-sidenav-container class="h-100 w-100">
-  <mat-sidenav [(opened)]="opened" mode="over">
-    <mat-list>
-      @for (item of menuList; track $index) {
-      <mat-list-item>
-        <a (click)="triggerMenuEvent(item)" [routerLink]="item?.path">{{
-          item?.menuListName
-        }}</a>
-      </mat-list-item>
-      }
-    </mat-list>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav class="sidenav-menu" [(opened)]="opened" mode="over">
+    <ng-content select="[sidenav]"></ng-content>
   </mat-sidenav>
   <mat-sidenav-content>
-    <router-outlet></router-outlet>
+    <ng-content select="[sidenav-content]"></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

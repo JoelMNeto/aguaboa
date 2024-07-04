@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HeaderService } from '../../shared/components/header/header.service';
 
 @Component({
   selector: 'app-produto',
@@ -7,6 +8,11 @@ import { Component } from '@angular/core';
   templateUrl: './produto.component.html',
   styleUrl: './produto.component.scss'
 })
-export class ProdutoComponent {
+export class ProdutoComponent implements OnInit {
 
+  constructor(private headerService: HeaderService) {}
+
+  ngOnInit(): void {
+    this.headerService.setPageTitle('Produtos');
+  }
 }

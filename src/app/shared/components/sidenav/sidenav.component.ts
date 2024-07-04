@@ -1,62 +1,37 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MenuStructBean } from '../../../bean';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [MatSidenavModule, MatListModule, RouterModule],
+  imports: [MatSidenavModule, CommonModule, RouterModule, MatButtonModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent implements OnInit {
-
-  @Output()
-  selectedItem: EventEmitter<MenuStructBean> = new EventEmitter();
-
   @Output()
   setOpenedValueFn: EventEmitter<(value: boolean) => void> = new EventEmitter();
 
-  opened = true;
+  opened = false;
 
-  menuList: MenuStructBean[] = [];
-
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.setMenuList();
-    this.setOpenedValueFn.emit(this.setOpenedValue);
-  }
+    this.setOpenedValueFn.emit(this.setOpenedValue.bind(this));
 
-  triggerMenuEvent(item: MenuStructBean) {
-    this.selectedItem.emit(item);
+    this.cdr?.detectChanges();
   }
 
   setOpenedValue(value: boolean) {
-    console.log(this.opened);
-    
     this.opened = value;
-  }
-
-  private setMenuList() {
-    this.menuList = [
-      {
-        path: '',
-        title: 'Clientes',
-        menuListName: 'Clientes',
-      },
-      {
-        path: '/produto',
-        title: 'Produtos',
-        menuListName: 'Produtos',
-      },
-      {
-        path: '/pedido',
-        title: 'Pedidos',
-        menuListName: 'Pedidos',
-      },
-    ];
   }
 }

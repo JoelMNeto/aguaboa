@@ -1,6 +1,30 @@
-<app-header [title]="title" (onClickToggle)="onClickToggle()"></app-header>
+<app-header (onClickToggle)="onClickToggle()"></app-header>
 
-<app-sidenav
-  (selectedItem)="changeTitle($event)"
-  (setOpenedValueFn)="setSidenavOpen = $event"
-></app-sidenav>
+<app-sidenav (setOpenedValueFn)="setSidenavOpen = $event">
+  <div sidenav>
+    <ul class="menu-list">
+      @for (item of menuList; track $index) {
+      <li class="menu-item">
+        <a
+          class="menu-link"
+          (click)="onClickMenu()"
+          [routerLink]="[item?.path]"
+          routerLinkActive="active"
+        >
+          <div class="menu-link-icone">
+            <mat-icon [fontIcon]="item.icone" color="primary"></mat-icon>
+          </div>
+
+          <div class="d-flex justify-content-center align-items-center">
+            {{ item?.menuName }}
+          </div>
+        </a>
+      </li>
+      }
+    </ul>
+  </div>
+
+  <div sidenav-content>
+    <router-outlet></router-outlet>
+  </div>
+</app-sidenav>
