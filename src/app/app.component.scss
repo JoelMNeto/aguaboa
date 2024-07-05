@@ -4,8 +4,8 @@
   }
 
   &-link:hover {
-    background-color: #e8eced;
     cursor: pointer;
+    background-color: #e8eced;
   }
 
   &-link {
@@ -16,9 +16,6 @@
     margin-bottom: 0.5rem;
 
     &-icone {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       margin-right: 0.8rem;
     }
   }

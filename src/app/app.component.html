@@ -12,11 +12,11 @@
       >
         <mat-list-item>
           <div class="d-flex">
-            <div class="menu-link-icone">
+            <div class="menu-link-icone d-flex h-100">
               <mat-icon [fontIcon]="item.icone" color="primary"></mat-icon>
             </div>
   
-            <div class="d-flex justify-content-center align-items-center">
+            <div>
               {{ item?.menuName }}
             </div>
           </div>
@@ -27,6 +27,10 @@
   </div>
 
   <div sidenav-content>
-    <router-outlet></router-outlet>
+    <div class="container">
+      <div class="content-container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </div>
 </app-sidenav>
