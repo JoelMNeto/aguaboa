@@ -7,4 +7,9 @@
     width: 200px;
     color: #efefef;
   }
+
+  &-content {
+    max-height: 100%;
+    overflow: hidden;
+  }
 }

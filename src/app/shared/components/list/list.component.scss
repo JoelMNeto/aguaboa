@@ -1,0 +1,17 @@
+.full-width-table {
+  width: 100%;
+  margin: 20px auto;
+}
+
+.full-heigth-table {
+  height: 100%;
+}
+
+.table-scroll {
+  margin: 0 0 5px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #e0e0e0 #fff;
+  overflow: auto;
+  overflow-y: auto;
+  height: calc(100% - 250px);
+}
