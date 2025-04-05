@@ -30,6 +30,9 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -43,6 +46,9 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterLink,
   ],
 })
 export class ListComponent implements AfterViewInit {
@@ -66,6 +72,9 @@ export class ListComponent implements AfterViewInit {
 
   @Input()
   loadingFn!: (loading: boolean) => void;
+
+  @Input()
+  linkNovo!: string;
 
   totalData: number = 0;
 

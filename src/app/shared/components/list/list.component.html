@@ -1,8 +1,16 @@
 <div class="full-heigth-table full-width-table h-100">
-  <mat-form-field class="w-100">
-    <mat-label>Pesquisa</mat-label>
-    <input matInput (keyup)="search($event)" #input />
-  </mat-form-field>
+  <div class="w-100 d-flex align-items-center justify-content-center">
+    <mat-form-field class="flex-grow-1">
+      <mat-label>Pesquisa</mat-label>
+      <input matInput (keyup)="search($event)" #input />
+    </mat-form-field>
+    
+    <div class="add-button-container">
+      <a [routerLink]="linkNovo" color="primary" mat-mini-fab class="m-1 h-100">
+        <mat-icon>add</mat-icon>
+      </a>
+    </div>
+  </div>
 
   <div class="table-scroll mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
