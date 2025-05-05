@@ -28,7 +28,7 @@ export class AppComponent {
     this.setSidenavOpen(this.opened);
   }
 
-  onClickMenu() {
+  closeSidenav() {
     this.setSidenavOpen(false);
   }
 }

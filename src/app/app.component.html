@@ -6,7 +6,7 @@
       @for (item of menuList; track $index) {
       <a
         class="menu-link"
-        (click)="onClickMenu()"
+        (click)="closeSidenav()"
         [routerLink]="[item?.path]"
         routerLinkActive="active"
       >
@@ -26,7 +26,7 @@
     </mat-list>
   </div>
 
-  <div sidenav-content class="container">
+  <div sidenav-content class="container" (click)="closeSidenav()">
     <div class="content-container">
       <router-outlet></router-outlet>
     </div>

@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav class="sidenav-menu" [(opened)]="opened" mode="over">
+  <mat-sidenav class="sidenav-menu" [(opened)]="opened" mode="over" (openedChange)="setOpenedValue($event)">
     <ng-content select="[sidenav]"></ng-content>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
