@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { ClienteComponent } from './pages/cliente/cliente.component';
 import { ProdutoComponent } from './pages/produto/produto.component';
 import { PedidoComponent } from './pages/pedido/pedido.component';
-import { CreateClienteComponent } from './pages/cliente/create-cliente/create-cliente.component';
 
 export const routes: Routes = [
   {
@@ -11,20 +10,14 @@ export const routes: Routes = [
   },
   {
     path: 'create',
-    component: CreateClienteComponent,
+    loadComponent: () => import('./pages/cliente/create-cliente/create-cliente.component').then(m => m.CreateClienteComponent),
   },
   {
     path: 'produto',
-    component: ProdutoComponent,
-    // children: [
-    //   {
-    //     path: '/novo',
-    //     component: 
-    //   }
-    // ]
+    loadComponent: () => import('./pages/produto/produto.component').then(m => m.ProdutoComponent),
   },
   {
     path: 'pedido',
-    component: PedidoComponent
+    loadComponent: () => import('./pages/pedido/pedido.component').then(m => m.PedidoComponent),
   },
 ];
