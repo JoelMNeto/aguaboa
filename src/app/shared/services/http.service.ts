@@ -15,4 +15,10 @@ export class HttpService {
       headers: config.headers,
     });
   }
+
+  post<T>(config: HttpConfig): Observable<T> {
+    return this.http.post<T>(config?.endpoint, config?.body, {
+      headers: config.headers,
+    });
+  }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pagination } from '../interfaces/list-component.interface';
 import {
+  ClienteCadastro,
   ClienteFiltros,
   ClienteInformacoes,
 } from '../interfaces/cliente.interface';
@@ -21,6 +22,13 @@ export class ClienteService {
         ...pagination,
         ...filter,
       },
+    });
+  }
+
+  cadastraCliente(body: ClienteCadastro) {
+    return this.http.post<ClienteInformacoes>({
+      endpoint,
+      body
     });
   }
 }

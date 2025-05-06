@@ -13,6 +13,12 @@ export interface ClienteInformacoes {
   saldoEmConta?: number;
 }
 
+export interface ClienteCadastro {
+  nome?: string;
+  contato?: string;
+  endereco?: EnderecoBean;
+}
+
 export interface EnderecoBean {
   logradouro?: string;
   numero?: number;
