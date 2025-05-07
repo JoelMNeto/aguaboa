@@ -12,6 +12,8 @@ import { HeaderService } from '../../../shared/services/header.service';
 import { Router } from '@angular/router';
 import { ClienteService } from '../../../shared/services/cliente.service';
 import { ClienteCadastro } from '../../../shared/interfaces/cliente.interface';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-create-cliente',
@@ -31,7 +33,8 @@ export class CreateClienteComponent implements OnInit {
   constructor(
     private headerService: HeaderService,
     private router: Router,
-    private service: ClienteService
+    private service: ClienteService,
+    private snackbar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -49,13 +52,21 @@ export class CreateClienteComponent implements OnInit {
 
     let objToSave = this.buildClienteCadastroDTO(this.form);
 
-    this.service.cadastraCliente(objToSave).subscribe(() => {});
+    this.service.cadastraCliente(objToSave).pipe(finalize(() => {
+      
+    })).subscribe(() => {
+      this.snackbar.open('Cliente cadastrado com sucesso!', 'Ok', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
+
+      this.navigateToHome();
+    });
   }
 
   onCancel() {
-    this.form = this.getEmptyForm();
-
-    this.router.navigate(['']);
+    this.navigateToHome();
   }
 
   private buildClienteCadastroDTO(form: FormGroup): ClienteCadastro {
@@ -105,5 +116,11 @@ export class CreateClienteComponent implements OnInit {
 
       cidade: new FormControl<string>(''),
     });
+  }
+
+  private navigateToHome() {
+    this.form = this.getEmptyForm();
+
+    this.router.navigateByUrl('/');
   }
 }
