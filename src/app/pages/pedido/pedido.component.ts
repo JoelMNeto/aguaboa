@@ -12,13 +12,12 @@ import {
   TipoPedidoEnum,
 } from '../../shared/interfaces/pedido.interface';
 import { ListComponent } from '../../shared/components/list/list.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UtilsService } from '../../shared/services/utils.service';
 
 @Component({
   selector: 'app-pedido',
   standalone: true,
-  imports: [ListComponent, MatProgressSpinnerModule],
+  imports: [ListComponent],
   templateUrl: './pedido.component.html',
   styleUrl: './pedido.component.scss',
 })

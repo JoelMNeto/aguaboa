@@ -6,7 +6,7 @@ export interface ClienteFiltros {
 }
 
 export interface ClienteInformacoes {
-  id?: number;
+  id: number;
   nome?: string;
   contato?: string;
   endereco?: EnderecoBean;

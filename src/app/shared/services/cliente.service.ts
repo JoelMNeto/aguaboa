@@ -31,4 +31,10 @@ export class ClienteService {
       body
     });
   }
+
+  deletaCliente(clienteId: number) {
+    return this.http.delete({
+      endpoint: `${endpoint}/${clienteId}`,
+    });
+  }
 }

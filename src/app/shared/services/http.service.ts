@@ -21,4 +21,10 @@ export class HttpService {
       headers: config.headers,
     });
   }
+
+  delete<T>(config: HttpConfig): Observable<T> {
+    return this.http.delete<T>(config?.endpoint, {
+      headers: config?.headers
+    });
+  }
 }

@@ -6,14 +6,20 @@ import {
   ListColumn,
   Pagination,
 } from '../../shared/interfaces/list-component.interface';
-import { ClienteFiltros } from '../../shared/interfaces/cliente.interface';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {
+  ClienteFiltros,
+  ClienteInformacoes,
+} from '../../shared/interfaces/cliente.interface';
 import { UtilsService } from '../../shared/services/utils.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../shared/components/dialog/dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-cliente',
   standalone: true,
-  imports: [ListComponent, MatProgressSpinnerModule],
+  imports: [ListComponent],
   templateUrl: './cliente.component.html',
   styleUrl: './cliente.component.scss',
 })
@@ -48,6 +54,12 @@ export class ClienteComponent implements OnInit {
       label: 'Bairro',
       value: 'endereco.bairro',
     },
+    {
+      label: '',
+      value: 'action',
+      icon: 'delete',
+      action: (row: ClienteInformacoes) => this.deleteCliente(row),
+    },
   ];
 
   pageSizes = [];
@@ -60,10 +72,30 @@ export class ClienteComponent implements OnInit {
   constructor(
     private headerService: HeaderService,
     private service: ClienteService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.headerService.setPageTitle('Clientes');
+  }
+
+  deleteCliente(cliente: ClienteInformacoes) {
+    this.dialog
+      .open(DialogComponent, {
+        data: {
+          title: 'Desativar cliente',
+          message: `Tem certeza que deseja desativar o cliente: ${cliente.id} - ${cliente.nome}?`,
+          askConfirmation: true,
+        },
+      })
+      .afterClosed()
+      .pipe(filter((answer) => answer === true))
+      .subscribe(() => {
+        this.service.deletaCliente(cliente.id).subscribe(() => {
+          this.snackbar.open('Cliente desativado com sucesso!', 'Ok');
+        });
+      });
   }
 }

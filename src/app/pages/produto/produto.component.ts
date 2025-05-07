@@ -4,13 +4,12 @@ import { ListColumn, Pagination } from '../../shared/interfaces/list-component.i
 import { ProdutoService } from '../../shared/services/produto.service';
 import { ProdutoFiltros } from '../../shared/interfaces/produto.interface';
 import { ListComponent } from '../../shared/components/list/list.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UtilsService } from '../../shared/services/utils.service';
 
 @Component({
   selector: 'app-produto',
   standalone: true,
-  imports: [ListComponent, MatProgressSpinnerModule],
+  imports: [ListComponent],
   templateUrl: './produto.component.html',
   styleUrl: './produto.component.scss'
 })
