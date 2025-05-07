@@ -18,3 +18,9 @@
   </button>
 </mat-dialog-actions>
 }
+
+@if (data?.buttonOk) {
+  <mat-dialog-actions align="end">
+    <button (click)="closeDialog()" mat-button mat-dialog-close>Ok</button>
+  </mat-dialog-actions>
+}

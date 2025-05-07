@@ -24,4 +24,8 @@ export class DialogComponent {
   onNo() {
     this.dialogRef.close(false);
   }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

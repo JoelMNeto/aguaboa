@@ -12,8 +12,10 @@ import { HeaderService } from '../../../shared/services/header.service';
 import { Router } from '@angular/router';
 import { ClienteService } from '../../../shared/services/cliente.service';
 import { ClienteCadastro } from '../../../shared/interfaces/cliente.interface';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-create-cliente',
@@ -35,6 +37,7 @@ export class CreateClienteComponent implements OnInit {
     private router: Router,
     private service: ClienteService,
     private snackbar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -45,20 +48,31 @@ export class CreateClienteComponent implements OnInit {
 
   onSubmit() {
     if (this.form.invalid) {
-      // Mensagem
-
-      return;
+      this.dialog
+        .open(DialogComponent, {
+          data: {
+            title: 'Erro',
+            message: 'Preencha corretamente os campos',
+            buttonOk: true,
+            type: 'error',
+          },
+        })
+        .afterClosed()
+        .subscribe(() => {
+          return;
+        });
     }
 
     let objToSave = this.buildClienteCadastroDTO(this.form);
 
-    this.service.cadastraCliente(objToSave).pipe(finalize(() => {
-      
-    })).subscribe(() => {
-      this.snackbar.open('Cliente cadastrado com sucesso!', 'Ok');
+    this.service
+      .cadastraCliente(objToSave)
+      .pipe(finalize(() => {}))
+      .subscribe(() => {
+        this.snackbar.open('Cliente cadastrado com sucesso!', 'Ok');
 
-      this.navigateToHome();
-    });
+        this.navigateToHome();
+      });
   }
 
   onCancel() {
@@ -77,9 +91,9 @@ export class CreateClienteComponent implements OnInit {
         complemento: getFormValue('complemento'),
         bairro: getFormValue('bairro'),
         cep: getFormValue('cep'),
-        cidade: getFormValue('cidade')
-      }
-    }
+        cidade: getFormValue('cidade'),
+      },
+    };
   }
 
   private getEmptyForm(): FormGroup {
