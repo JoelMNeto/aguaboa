@@ -55,11 +55,7 @@ export class CreateClienteComponent implements OnInit {
     this.service.cadastraCliente(objToSave).pipe(finalize(() => {
       
     })).subscribe(() => {
-      this.snackbar.open('Cliente cadastrado com sucesso!', 'Ok', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      });
+      this.snackbar.open('Cliente cadastrado com sucesso!', 'Ok');
 
       this.navigateToHome();
     });
