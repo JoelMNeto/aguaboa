@@ -1,0 +1,20 @@
+<h2 mat-dialog-title [ngClass]="{'error-color': data?.type === 'error'}">{{ data?.title }}</h2>
+
+<mat-dialog-content>
+  {{ data?.message }}
+</mat-dialog-content>
+
+@if (data?.askConfirmation) {
+<mat-dialog-actions align="end">
+  <button (click)="onNo()" mat-button mat-dialog-close>Não</button>
+  <button
+    (click)="onYes()"
+    mat-button
+    mat-dialog-close
+    cdkFocusInitial
+    color="accent"
+  >
+    Sim
+  </button>
+</mat-dialog-actions>
+}
