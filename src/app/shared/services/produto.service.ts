@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { ClienteFiltros } from '../interfaces/cliente.interface';
 import { Pagination } from '../interfaces/list-component.interface';
-import { ProdutoInformacoes } from '../interfaces/produto.interface';
+import { ProdutoCadastro, ProdutoInformacoes } from '../interfaces/produto.interface';
 
 const endpoint = 'api/produtos';
 
@@ -20,6 +20,19 @@ export class ProdutoService {
         ...pagination,
         ...filter,
       },
+    });
+  }
+
+  cadastraProduto(body: ProdutoCadastro) {
+    return this.http.post<ProdutoInformacoes>({
+      endpoint,
+      body,
+    });
+  }
+
+  desativaProduto(produtoId: number) {
+    return this.http.delete({
+      endpoint: `${endpoint}/${produtoId}`,
     });
   }
 }

@@ -32,7 +32,7 @@ export class ClienteService {
     });
   }
 
-  deletaCliente(clienteId: number) {
+  desativaCliente(clienteId: number) {
     return this.http.delete({
       endpoint: `${endpoint}/${clienteId}`,
     });

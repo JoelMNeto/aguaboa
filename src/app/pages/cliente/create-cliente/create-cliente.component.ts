@@ -61,6 +61,8 @@ export class CreateClienteComponent implements OnInit {
         .subscribe(() => {
           return;
         });
+
+        return;
     }
 
     let objToSave = this.buildClienteCadastroDTO(this.form);

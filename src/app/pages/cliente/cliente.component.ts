@@ -58,7 +58,7 @@ export class ClienteComponent implements OnInit {
       label: '',
       value: 'action',
       icon: 'delete',
-      action: (row: ClienteInformacoes) => this.deleteCliente(row),
+      action: (row: ClienteInformacoes) => this.desativaCliente(row),
     },
   ];
 
@@ -81,7 +81,7 @@ export class ClienteComponent implements OnInit {
     this.headerService.setPageTitle('Clientes');
   }
 
-  deleteCliente(cliente: ClienteInformacoes) {
+  desativaCliente(cliente: ClienteInformacoes) {
     this.dialog
       .open(DialogComponent, {
         data: {
@@ -93,7 +93,7 @@ export class ClienteComponent implements OnInit {
       .afterClosed()
       .pipe(filter((answer) => answer === true))
       .subscribe(() => {
-        this.service.deletaCliente(cliente.id).subscribe(() => {
+        this.service.desativaCliente(cliente.id).subscribe(() => {
           this.snackbar.open('Cliente desativado com sucesso!', 'Ok');
         });
       });

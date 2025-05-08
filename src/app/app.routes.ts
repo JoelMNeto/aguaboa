@@ -17,6 +17,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/produto/produto.component').then(m => m.ProdutoComponent),
   },
   {
+    path: 'create-produto',
+    loadComponent: () => import('./pages/produto/create-produto/create-produto.component').then(m => m.CreateProdutoComponent),
+  },
+  {
     path: 'pedido',
     loadComponent: () => import('./pages/pedido/pedido.component').then(m => m.PedidoComponent),
   },

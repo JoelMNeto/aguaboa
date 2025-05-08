@@ -1,0 +1,30 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-content-container">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input type="text" matInput formControlName="nome" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Marca</mat-label>
+      <input type="text" matInput formControlName="marca" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Preço</mat-label>
+      <input type="text" matInput formControlName="preco" />
+    </mat-form-field>
+  </div>
+
+  <div class="d-flex justify-content-end" style="width: 500px">
+    <button
+      style="margin-right: 5px"
+      mat-raised-button
+      color="accent"
+      (click)="onCancel()"
+    >
+      Cancelar
+    </button>
+    <button type="submit" mat-raised-button color="primary">Salvar</button>
+  </div>
+</form>

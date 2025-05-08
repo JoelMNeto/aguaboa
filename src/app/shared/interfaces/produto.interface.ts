@@ -10,3 +10,9 @@ export interface ProdutoFiltros {
   marca?: string,
   busca?: string,
 }
+
+export interface ProdutoCadastro {
+  nome: string,
+  marca?: string,
+  preco: number;
+}
