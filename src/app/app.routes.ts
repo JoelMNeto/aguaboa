@@ -24,4 +24,8 @@ export const routes: Routes = [
     path: 'pedido',
     loadComponent: () => import('./pages/pedido/pedido.component').then(m => m.PedidoComponent),
   },
+  {
+    path: 'create-pedido',
+    loadComponent: () => import('./pages/pedido/create-pedido/create-pedido.component').then(m => m.CreatePedidoComponent),
+  },
 ];

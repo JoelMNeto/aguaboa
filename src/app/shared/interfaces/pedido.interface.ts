@@ -33,19 +33,35 @@ export interface PedidoFiltros {
   periodoFim?: Date,
 }
 
+export interface PedidoLancamento {
+  clienteId: number;
+  itens: ItemPedidoCadastro[];
+  frete?: number;
+  tipo?: TipoPedidoEnum;
+  formaPagamento?: FormaPagamentoEnum;
+  valorPago?: number;
+}
+
+export interface ItemPedidoCadastro {
+  produtoId: number;
+  quantidade: number;
+  desconto?: number;
+  precoUnitario?: number;
+}
+
 export enum StatusEnum {
   PAGO = 'Pago' as any,
   EM_ABERTO = 'Em aberto' as any,
 }
 
 export enum TipoPedidoEnum {
-  ENTREGA = 'Entrega' as any,
-  RETIRADA = 'Retirada' as any,
+  ENTREGA = 'ENTREGA' as any,
+  RETIRADA = 'RETIRADA' as any,
 }
 
 export enum FormaPagamentoEnum {
-  CARTAO = 'Cartão' as any,
-  DINHEIRO = 'Dienheiro' as any,
-  SALDO = 'Saldo em conta' as any,
+  CARTAO = 'CARTÃO' as any,
+  DINHEIRO = 'DIENHEIRO' as any,
+  SALDO = 'SALDO EM CONTA' as any,
   PIX = 'PIX' as any,
 }

@@ -8,11 +8,16 @@ import { PedidoService } from '../../shared/services/pedido.service';
 import {
   FormaPagamentoEnum,
   PedidoFiltros,
+  PedidoInformacoes,
   StatusEnum,
   TipoPedidoEnum,
 } from '../../shared/interfaces/pedido.interface';
 import { ListComponent } from '../../shared/components/list/list.component';
 import { UtilsService } from '../../shared/services/utils.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { filter } from 'rxjs';
+import { DialogComponent } from '../../shared/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-pedido',
@@ -70,6 +75,12 @@ export class PedidoComponent implements OnInit {
       value: 'tipo',
       format: (value: any) => TipoPedidoEnum[value],
     },
+    {
+      label: '',
+      value: 'action',
+      icon: 'delete',
+      action: (row: PedidoInformacoes) => this.desativaPedido(row),
+    },
   ];
 
   pageSizes = [];
@@ -82,10 +93,30 @@ export class PedidoComponent implements OnInit {
   constructor(
     private headerService: HeaderService,
     private service: PedidoService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.headerService.setPageTitle('Pedidos');
+  }
+
+  private desativaPedido(pedido: PedidoInformacoes): void {
+    this.dialog
+      .open(DialogComponent, {
+        data: {
+          title: 'Excluir Pedido',
+          message: `Tem certeza que deseja excluir o Pedido: ${pedido.id}?`,
+          askConfirmation: true,
+        },
+      })
+      .afterClosed()
+      .pipe(filter((answer) => answer === true))
+      .subscribe(() => {
+        this.service.desativaPedido(pedido.id).subscribe(() => {
+          this.snackbar.open('Pedido excluído com sucesso!', 'Ok');
+        });
+      });
   }
 }

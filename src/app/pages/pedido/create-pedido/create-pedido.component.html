@@ -1,0 +1,50 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-content-container">
+    <mat-form-field>
+      <mat-label>Código do cliente</mat-label>
+      <input type="text" matInput formControlName="clienteId" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Valor pago</mat-label>
+      <input type="text" matInput formControlName="valorPago" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Valor do frete</mat-label>
+      <input type="text" matInput formControlName="frete" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Tipo do pedido</mat-label>
+      <mat-select formControlName="tipo">
+        @for (tipoPedido of tiposPedido; track tipoPedido) {
+          <mat-option [value]="tipoPedido.value">{{ tipoPedido.viewValue }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Forma de pagamento</mat-label>
+      <mat-select formControlName="formaPagamento">
+        @for (formaPagamento of formasDePagamento; track formaPagamento) {
+          <mat-option [value]="formaPagamento.value">{{ formaPagamento.viewValue }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!--ITENS DO PEDIDO-->
+  </div>
+
+  <div class="d-flex justify-content-end" style="width: 500px">
+    <button
+      style="margin-right: 5px"
+      mat-raised-button
+      color="accent"
+      (click)="onCancel()"
+    >
+      Cancelar
+    </button>
+    <button type="submit" mat-raised-button color="primary">Salvar</button>
+  </div>
+</form>
