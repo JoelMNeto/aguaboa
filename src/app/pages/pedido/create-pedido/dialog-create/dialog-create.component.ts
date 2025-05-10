@@ -6,8 +6,10 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -42,7 +44,10 @@ export class DialogCreateComponent implements OnInit {
 
   readonly dialogRef = inject(MatDialogRef<DialogComponent>);
 
-  data = inject(MAT_DIALOG_DATA);
+  data: {
+    title: string,
+    itensPeidoList: ItemPedidoCadastro[]
+  } = inject(MAT_DIALOG_DATA);
 
   constructor(private snackbar: MatSnackBar) {}
 
@@ -52,29 +57,50 @@ export class DialogCreateComponent implements OnInit {
 
   onSubmit() {
     if (this.form.invalid) {
-      this.snackbar.open('Preencha corretamente os campos!')
+      this.snackbar.open('Preencha corretamente os campos!');
       return;
     }
 
     let objToSave = this.buildItemPedidoCadastroDTO(this.form);
 
+    if (this.data?.itensPeidoList.map(i => i.produtoId).includes(objToSave.produtoId)) {
+      this.snackbar.open('Este produto já foi adicionado ao pedido!');
+      return;
+    }
+
     this.dialogRef.close(objToSave);
   }
 
-  closeDialog() {
+  onCloseDialog() {
     this.dialogRef.close();
   }
 
   private getEmptyForm(): FormGroup {
-    return new FormGroup({});
+    return new FormGroup({
+      produtoId: new FormControl<string>('', {
+        nonNullable: true,
+        validators: Validators.required,
+      }),
+
+      quantidade: new FormControl<string>('', {
+        nonNullable: true,
+        validators: Validators.required,
+      }),
+
+      desconto: new FormControl<string>(''),
+
+      precoUnitario: new FormControl<string>(''),
+    });
   }
 
   private buildItemPedidoCadastroDTO(form: FormGroup): ItemPedidoCadastro {
     let getFormValue = (control: string) => form.get(control)?.value;
 
     return {
-      produtoId: 0,
-      quantidade: 0,
+      produtoId: Number.parseInt(getFormValue('produtoId')) || 0,
+      quantidade: Number.parseInt(getFormValue('quantidade')) || 0,
+      desconto: Number.parseFloat(getFormValue('desconto')) || 0,
+      precoUnitario: Number.parseFloat(getFormValue('precoUnitario')) || 0
     };
   }
 }

@@ -41,7 +41,7 @@ export class CreateProdutoComponent {
   ) {}
 
   ngOnInit(): void {
-    this.headerService.setPageTitle('Produto');
+    this.headerService.setPageTitle('Novo Produto');
 
     this.form = this.getEmptyForm();
   }

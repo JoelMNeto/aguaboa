@@ -1,1 +1,34 @@
-<p>dialog-create works!</p>
+<h2 mat-dialog-title>
+  {{ data.title }}
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-content-container">
+    <mat-form-field>
+      <mat-label>Código do produto</mat-label>
+      <input type="text" matInput formControlName="produtoId" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Quantidade</mat-label>
+      <input type="text" matInput formControlName="quantidade" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Desconto</mat-label>
+      <input type="text" matInput formControlName="desconto" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Preço unitário</mat-label>
+      <input type="text" matInput formControlName="precoUnitario" />
+    </mat-form-field>
+  </div>
+</form>
+
+<mat-dialog-actions align="end">
+  <button (click)="onCloseDialog()" mat-button>Voltar</button>
+  <button (click)="onSubmit()" mat-button cdkFocusInitial color="accent">
+    Confirmar
+  </button>
+</mat-dialog-actions>

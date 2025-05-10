@@ -41,7 +41,7 @@ export class CreateClienteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.headerService.setPageTitle('Clientes');
+    this.headerService.setPageTitle('Novo Clientes');
 
     this.form = this.getEmptyForm();
   }

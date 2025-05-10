@@ -61,7 +61,7 @@ export enum TipoPedidoEnum {
 
 export enum FormaPagamentoEnum {
   CARTAO = 'CARTÃO' as any,
-  DINHEIRO = 'DIENHEIRO' as any,
+  DINHEIRO = 'DINHEIRO' as any,
   SALDO = 'SALDO EM CONTA' as any,
   PIX = 'PIX' as any,
 }
