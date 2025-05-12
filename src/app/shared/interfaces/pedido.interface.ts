@@ -24,13 +24,13 @@ export interface ItemPedidoInformacoes {
 }
 
 export interface PedidoFiltros {
-  clienteId?: number,
-  busca?: string, 
-  status?: StatusEnum, 
-  tipo?: TipoPedidoEnum, 
-  formaPagamento?: FormaPagamentoEnum,
-  peridoInicio?: Date, 
-  periodoFim?: Date,
+  clienteId?: number;
+  busca?: string;
+  status?: StatusEnum;
+  tipo?: TipoPedidoEnum;
+  formaPagamento?: FormaPagamentoEnum;
+  peridoInicio?: Date;
+  periodoFim?: Date;
 }
 
 export interface PedidoLancamento {
@@ -50,18 +50,59 @@ export interface ItemPedidoCadastro {
 }
 
 export enum StatusEnum {
-  PAGO = 'Pago' as any,
-  EM_ABERTO = 'Em aberto' as any,
+  PAGO = "PAGO",
+  EM_ABERTO = "EM_ABERTO",
 }
 
 export enum TipoPedidoEnum {
-  ENTREGA = 'ENTREGA' as any,
-  RETIRADA = 'RETIRADA' as any,
+  ENTREGA = "ENTREGA",
+  RETIRADA = "RETIRADA",
 }
 
 export enum FormaPagamentoEnum {
-  CARTAO = 'CARTÃO' as any,
-  DINHEIRO = 'DINHEIRO' as any,
-  SALDO = 'SALDO EM CONTA' as any,
-  PIX = 'PIX' as any,
+  CARTAO = "CARTAO",
+  DINHEIRO = "DINHEIRO",
+  SALDO = "SALDO",
+  PIX = "PIX",
 }
+
+export const FORMAS_PAGAMENTO = [
+  {
+    viewValue: 'Dinheiro',
+    value: FormaPagamentoEnum.DINHEIRO,
+  },
+  {
+    viewValue: 'Pix',
+    value: FormaPagamentoEnum.PIX,
+  },
+  {
+    viewValue: 'Cartão',
+    value: FormaPagamentoEnum.CARTAO,
+  },
+  {
+    viewValue: 'Saldo em conta',
+    value: FormaPagamentoEnum.SALDO,
+  },
+];
+
+export const TIPOS_PEDIDO = [
+  {
+    viewValue: 'Entrega',
+    value: TipoPedidoEnum.ENTREGA,
+  },
+  {
+    viewValue: 'Retirada',
+    value: TipoPedidoEnum.RETIRADA,
+  },
+];
+
+export const STATUS_PEDIDO = [
+  {
+    viewValue: 'Em aberto',
+    value: StatusEnum.EM_ABERTO,
+  },
+  {
+    viewValue: 'Pago',
+    value: StatusEnum.PAGO,
+  },
+];

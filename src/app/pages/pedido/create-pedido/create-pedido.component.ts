@@ -11,15 +11,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { filter, finalize, Observable, of, Subject } from 'rxjs';
+import { filter, finalize, Subject } from 'rxjs';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
 import { HeaderService } from '../../../shared/services/header.service';
 import { PedidoService } from '../../../shared/services/pedido.service';
 import {
-  FormaPagamentoEnum,
   ItemPedidoCadastro,
   PedidoLancamento,
   TipoPedidoEnum,
+  FORMAS_PAGAMENTO,
 } from '../../../shared/interfaces/pedido.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { DumpListComponent } from '../../../shared/components/dump-list/dump-list.component';
@@ -59,24 +59,7 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  formasDePagamento = [
-    {
-      viewValue: 'Dinheiro',
-      value: FormaPagamentoEnum.DINHEIRO,
-    },
-    {
-      viewValue: 'Pix',
-      value: FormaPagamentoEnum.PIX,
-    },
-    {
-      viewValue: 'Cartão',
-      value: FormaPagamentoEnum.CARTAO,
-    },
-    {
-      viewValue: 'Saldo em conta',
-      value: FormaPagamentoEnum.SALDO,
-    },
-  ];
+  formasDePagamento = FORMAS_PAGAMENTO; 
 
   itemPedidoColumns: ListColumn[] = [
     {

@@ -6,11 +6,13 @@ import {
 } from '../../shared/interfaces/list-component.interface';
 import { PedidoService } from '../../shared/services/pedido.service';
 import {
-  FormaPagamentoEnum,
   PedidoFiltros,
   PedidoInformacoes,
   StatusEnum,
   TipoPedidoEnum,
+  FORMAS_PAGAMENTO,
+  TIPOS_PEDIDO,
+  STATUS_PEDIDO,
 } from '../../shared/interfaces/pedido.interface';
 import { ListComponent } from '../../shared/components/list/list.component';
 import { UtilsService } from '../../shared/services/utils.service';
@@ -44,7 +46,7 @@ export class PedidoComponent implements OnInit {
     {
       label: 'Status',
       value: 'status',
-      format: (value: any) => StatusEnum[value],
+      format: (value: any) => STATUS_PEDIDO.find(f => f.value === value)?.viewValue,
     },
     {
       label: 'Cliente',
@@ -68,12 +70,12 @@ export class PedidoComponent implements OnInit {
     {
       label: 'Forma de pagamento',
       value: 'formaPagamento',
-      format: (value: any) => FormaPagamentoEnum[value],
+      format: (value: any) => FORMAS_PAGAMENTO.find(e => e.value === value)?.viewValue,
     },
     {
       label: 'Tipo',
       value: 'tipo',
-      format: (value: any) => TipoPedidoEnum[value],
+      format: (value: any) => TIPOS_PEDIDO.find(e => e.value === value)?.viewValue,
     },
     {
       label: '',
