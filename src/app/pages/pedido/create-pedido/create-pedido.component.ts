@@ -73,12 +73,12 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
     {
       label: 'Desconto',
       value: 'desconto',
-      format: this.utilsService.formataValorMonetario,
+      format: (value: any) => value <= 0 ? '' : this.utilsService.formataValorMonetario,
     },
     {
       label: 'Preço unitário',
       value: 'precoUnitario',
-      format: this.utilsService.formataValorMonetario,
+      format: (value: any) => value <= 0 ? '' : this.utilsService.formataValorMonetario,
     },
     {
       label: '',
