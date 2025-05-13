@@ -24,7 +24,7 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 import { DumpListComponent } from '../../../shared/components/dump-list/dump-list.component';
 import { ListColumn } from '../../../shared/interfaces/list-component.interface';
-import { DialogCreateComponent } from './dialog-create/dialog-create.component';
+import { DialogCreateComponent } from '../dialog/dialog-create/dialog-create.component';
 import { UtilsService } from '../../../shared/services/utils.service';
 
 @Component({

@@ -8,11 +8,11 @@ import { PedidoService } from '../../shared/services/pedido.service';
 import {
   PedidoFiltros,
   PedidoInformacoes,
-  StatusEnum,
-  TipoPedidoEnum,
   FORMAS_PAGAMENTO,
   TIPOS_PEDIDO,
   STATUS_PEDIDO,
+  PedidoAlteracao,
+  StatusEnum,
 } from '../../shared/interfaces/pedido.interface';
 import { ListComponent } from '../../shared/components/list/list.component';
 import { UtilsService } from '../../shared/services/utils.service';
@@ -20,6 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter } from 'rxjs';
 import { DialogComponent } from '../../shared/components/dialog/dialog.component';
+import { DialogUpdateComponent } from './dialog/dialog-update/dialog-update.component';
 
 @Component({
   selector: 'app-pedido',
@@ -46,7 +47,9 @@ export class PedidoComponent implements OnInit {
     {
       label: 'Status',
       value: 'status',
-      format: (value: any) => STATUS_PEDIDO.find(f => f.value === value)?.viewValue,
+      color: (row: any) => StatusEnum.PAGO === row?.status ? 'success' : 'danger',
+      format: (value: any) =>
+        STATUS_PEDIDO.find((f) => f.value === value)?.viewValue,
     },
     {
       label: 'Cliente',
@@ -70,18 +73,32 @@ export class PedidoComponent implements OnInit {
     {
       label: 'Forma de pagamento',
       value: 'formaPagamento',
-      format: (value: any) => FORMAS_PAGAMENTO.find(e => e.value === value)?.viewValue,
+      format: (value: any) =>
+        FORMAS_PAGAMENTO.find((e) => e.value === value)?.viewValue,
     },
     {
       label: 'Tipo',
       value: 'tipo',
-      format: (value: any) => TIPOS_PEDIDO.find(e => e.value === value)?.viewValue,
+      format: (value: any) =>
+        TIPOS_PEDIDO.find((e) => e.value === value)?.viewValue,
     },
     {
       label: '',
-      value: 'action',
+      value: 'actionDelete',
+      color: 'accent',
+      tooltipMessage: 'Excluir pedido',
+      isAction: true,
       icon: 'delete',
       action: (row: PedidoInformacoes) => this.desativaPedido(row),
+    },
+    {
+      label: '',
+      value: 'actionUpdate',
+      color: 'primary',
+      tooltipMessage: 'Baixar pedido',
+      isAction: true,
+      icon: 'done',
+      action: (row: PedidoInformacoes) => this.alteraPedido(row),
     },
   ];
 
@@ -118,6 +135,27 @@ export class PedidoComponent implements OnInit {
       .subscribe(() => {
         this.service.desativaPedido(pedido.id).subscribe(() => {
           this.snackbar.open('Pedido excluído com sucesso!', 'Ok');
+        });
+      });
+  }
+
+  private alteraPedido(pedido: PedidoInformacoes): void {
+    this.dialog
+      .open(DialogUpdateComponent, {
+        data: {
+          title: `Baixar pedido - Valor: ${this.utilsService.formataValorMonetario(
+            pedido?.valorAtualizado
+          )}`,
+          pedido,
+        },
+      })
+      .afterClosed()
+      .pipe(
+        filter((item: PedidoAlteracao) => item !== null && item !== undefined)
+      )
+      .subscribe((item: PedidoAlteracao) => {
+        this.service.alteraPedido(item).subscribe(() => {
+          this.snackbar.open('Pedido baixado com sucesso!', 'Ok');
         });
       });
   }

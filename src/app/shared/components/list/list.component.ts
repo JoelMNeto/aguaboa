@@ -33,6 +33,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-list',
@@ -40,14 +41,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './list.component.scss',
   standalone: true,
   imports: [
+    CommonModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    CommonModule,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule,
     RouterLink,
   ],
 })
@@ -93,9 +95,11 @@ export class ListComponent implements AfterViewInit {
   get objColumns() {
     return this.displayedColumns;
   }
-  
+
   getProperty(obj: any, column: ListColumn) {
-    let value = column.value.split('.').reduce((acc, part) => acc && acc[part], obj);
+    let value = column.value
+      .split('.')
+      .reduce((acc, part) => acc && acc[part], obj);
 
     if (!column?.format) {
       return value;
@@ -104,20 +108,61 @@ export class ListComponent implements AfterViewInit {
     return column?.format(value);
   }
 
-  getClasses(column: ListColumn) {
+  getClasses(column: ListColumn, row: any) {
     let classes: string[] = [''];
 
-    if (!column.align) {
-      return classes;
+    this.fillAlignClass(column, classes);
+
+    this.fillColorClass(column, row, classes);
+
+    return classes;
+  }
+
+  private fillAlignClass(column: ListColumn, classes: string[]) {
+    if (!column?.align) {
+      return;
     }
 
     switch (column.align) {
-      case 'center': classes.push('justify-content-center'); break;
-      case 'end': classes.push('justify-content-end'); break;  
-      case 'start': classes.push('justify-content-start'); break;
+      case 'center':
+        classes.push('justify-content-center');
+        break;
+      case 'end':
+        classes.push('justify-content-end');
+        break;
+      case 'start':
+        classes.push('justify-content-start');
+        break;
+    }
+  }
+
+  private fillColorClass(column: ListColumn, row: any, classes: string[]) {
+    if (!column?.color) {
+      return;
     }
 
-    return classes;
+    let color = this.getColumnColor(column, row);
+
+    switch (color) {
+      case 'accent':
+        classes.push('color-accent');
+        break;
+      case 'primary':
+        classes.push('color-primary');
+        break;
+      case 'success':
+        classes.push('color-success');
+        break;
+      case 'danger':
+        classes.push('color-danger');
+        break;
+    }
+  }
+
+  getColumnColor(column: ListColumn, row: any) {
+    return typeof column.color === 'function'
+      ? column.color(row)
+      : column.color ?? '';
   }
 
   search(event: Event) {
@@ -143,7 +188,6 @@ export class ListComponent implements AfterViewInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-
           return this.getTableData$(
             {
               page: this.paginator.pageIndex,

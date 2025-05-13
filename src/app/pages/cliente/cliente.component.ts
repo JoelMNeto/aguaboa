@@ -40,6 +40,7 @@ export class ClienteComponent implements OnInit {
     {
       label: 'Saldo em conta',
       value: 'saldoEmConta',
+      color: (row: any) => row?.saldoEmConta < 0 ? 'danger' : 'success',
       format: this.utilsService.formataValorMonetario,
     },
     {
@@ -56,7 +57,10 @@ export class ClienteComponent implements OnInit {
     },
     {
       label: '',
-      value: 'action',
+      value: 'actionDelete',
+      color: 'accent',
+      tooltipMessage: 'Excluir cliente',
+      isAction: true,
       icon: 'delete',
       action: (row: ClienteInformacoes) => this.desativaCliente(row),
     },

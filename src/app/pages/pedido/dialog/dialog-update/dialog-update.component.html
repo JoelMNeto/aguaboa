@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>
+  {{ data.title }}
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-content-container">
+    <mat-form-field>
+      <mat-label>Valor Pago</mat-label>
+      <input type="text" matInput formControlName="valorPago" />
+    </mat-form-field>
+  </div>
+</form>
+
+<mat-dialog-actions align="end">
+  <button (click)="onCloseDialog()" mat-button>Cancelar</button>
+  <button (click)="onSubmit()" mat-button cdkFocusInitial color="accent">
+    Salvar
+  </button>
+</mat-dialog-actions>

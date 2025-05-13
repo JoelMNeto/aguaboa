@@ -39,6 +39,20 @@ export class HttpService {
       );
   }
 
+  put<T>(config: HttpConfig): Observable<T> {
+    return this.http
+      .put<T>(config?.endpoint, config?.body, {
+        headers: config.headers,
+      })
+      .pipe(
+        catchError((err) => {
+          this.getErrorHandlerDialog(err.error);
+
+          throw new Error(`Erro tratado ${err.error}`);
+        })
+      );
+  }
+
   delete<T>(config: HttpConfig): Observable<T> {
     return this.http.delete<T>(config?.endpoint, {
       headers: config?.headers,

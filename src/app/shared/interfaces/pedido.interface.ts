@@ -49,6 +49,11 @@ export interface ItemPedidoCadastro {
   precoUnitario?: number;
 }
 
+export interface PedidoAlteracao {
+  id: number;
+  valorPago: number;
+}
+
 export enum StatusEnum {
   PAGO = "PAGO",
   EM_ABERTO = "EM_ABERTO",
@@ -98,11 +103,11 @@ export const TIPOS_PEDIDO = [
 
 export const STATUS_PEDIDO = [
   {
-    viewValue: 'Em aberto',
+    viewValue: 'EM ABERTO',
     value: StatusEnum.EM_ABERTO,
   },
   {
-    viewValue: 'Pago',
+    viewValue: 'PAGO',
     value: StatusEnum.PAGO,
   },
 ];

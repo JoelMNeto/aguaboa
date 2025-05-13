@@ -44,7 +44,10 @@ export class ProdutoComponent implements OnInit {
     },
     {
       label: '',
-      value: 'action',
+      value: 'actionDelete',
+      color: 'accent',
+      tooltipMessage: 'Excluir produto',
+      isAction: true,
       icon: 'delete',
       action: (row: ProdutoInformacoes) => this.desativaProduto(row),
     },
