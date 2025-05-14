@@ -4,6 +4,8 @@ export interface Pagination {
   sort?: string;
 }
 
+export type ColorOptions = 'primary' | 'accent' | 'success' | 'danger' | '';
+
 export interface ListColumn {
   value: string;
   label: string;
@@ -11,7 +13,7 @@ export interface ListColumn {
   tooltipMessage?: string;
   align?: 'center' | 'start' | 'end';
   icon?: string;
-  color?: ('primary' | 'accent' | 'success' | 'danger') | ((row: any) => 'primary' | 'accent' | 'success' | 'danger');
+  color?: ColorOptions | ((row: any) => ColorOptions);
   format?: (value: any) => any;
   action?: (value: any) => void;
 }

@@ -40,7 +40,7 @@ export class ClienteComponent implements OnInit {
     {
       label: 'Saldo em conta',
       value: 'saldoEmConta',
-      color: (row: any) => row?.saldoEmConta < 0 ? 'danger' : 'success',
+      color: (row: any) => this.getSaldoColor(row),
       format: this.utilsService.formataValorMonetario,
     },
     {
@@ -101,5 +101,13 @@ export class ClienteComponent implements OnInit {
           this.snackbar.open('Cliente desativado com sucesso!', 'Ok');
         });
       });
+  }
+
+  private getSaldoColor(row: any) {
+    if (row?.saldoEmConta == 0) {
+      return '';
+    }
+
+    return row?.saldoEmConta < 0 ? 'danger' : 'success';
   }
 }
