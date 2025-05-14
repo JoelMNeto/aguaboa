@@ -110,4 +110,8 @@ export class ClienteComponent implements OnInit {
 
     return row?.saldoEmConta < 0 ? 'danger' : 'success';
   }
+
+  ngOnDestroy(): void {
+    this.headerService.setPageTitle('');
+  }
 }

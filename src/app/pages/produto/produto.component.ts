@@ -89,4 +89,8 @@ export class ProdutoComponent implements OnInit {
         });
       });
   }
+
+  ngOnDestroy(): void {
+    this.headerService.setPageTitle('');
+  }
 }

@@ -112,4 +112,8 @@ export class CreateProdutoComponent {
 
     this.router.navigateByUrl('/produto');
   }
+
+  ngOnDestroy(): void {
+    this.headerService.setPageTitle('');
+  }
 }

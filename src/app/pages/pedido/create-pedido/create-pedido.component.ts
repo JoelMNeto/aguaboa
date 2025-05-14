@@ -228,4 +228,8 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
         this.atualizaItens();
       });
   }
+
+  ngOnDestroy(): void {
+    this.headerService.setPageTitle('');
+  }
 }

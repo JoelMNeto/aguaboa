@@ -135,4 +135,8 @@ export class CreateClienteComponent implements OnInit {
 
     this.router.navigateByUrl('/');
   }
+
+  ngOnDestroy(): void {
+    this.headerService.setPageTitle('');
+  }
 }

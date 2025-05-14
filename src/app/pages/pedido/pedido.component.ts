@@ -159,4 +159,8 @@ export class PedidoComponent implements OnInit {
         });
       });
   }
+
+  ngOnDestroy(): void {
+    this.headerService.setPageTitle('');
+  }
 }
