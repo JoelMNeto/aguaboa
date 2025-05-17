@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -53,7 +54,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     RouterLink,
   ],
 })
-export class ListComponent implements AfterViewInit {
+export class ListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -78,6 +79,9 @@ export class ListComponent implements AfterViewInit {
   @Input()
   linkNovo!: string;
 
+  @Output()
+  atualizaLista: EventEmitter<() => void> = new EventEmitter();
+
   totalData: number = 0;
 
   data!: any[];
@@ -86,7 +90,13 @@ export class ListComponent implements AfterViewInit {
 
   filter$ = new Subject<any>();
 
+  listRefresh$ = new Subject<any>();
+
   constructor() {}
+
+  ngOnInit(): void {
+    this.atualizaLista.emit(() => this.listRefresh$.next({}));
+  }
 
   get columns() {
     return this.displayedColumns.map((c) => c.value);
@@ -183,7 +193,8 @@ export class ListComponent implements AfterViewInit {
     merge(
       this.paginator.page,
       this.sort.sortChange,
-      this.filter$.asObservable()
+      this.filter$.asObservable(),
+      this.listRefresh$.asObservable()
     )
       .pipe(
         startWith({}),

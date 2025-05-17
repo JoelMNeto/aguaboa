@@ -86,7 +86,7 @@ export class PedidoComponent implements OnInit {
       label: '',
       value: 'actionDelete',
       color: 'accent',
-      tooltipMessage: 'Excluir pedido',
+      tooltipMessage: 'Desativar pedido',
       isAction: true,
       icon: 'delete',
       action: (row: PedidoInformacoes) => this.desativaPedido(row),
@@ -109,6 +109,8 @@ export class PedidoComponent implements OnInit {
   getPedidos = (pagination: Pagination, filter: any) =>
     this.service?.getPedidos(pagination, filter);
 
+  atualizaLista = () => {};
+
   constructor(
     private headerService: HeaderService,
     private service: PedidoService,
@@ -125,8 +127,8 @@ export class PedidoComponent implements OnInit {
     this.dialog
       .open(DialogComponent, {
         data: {
-          title: 'Excluir Pedido',
-          message: `Tem certeza que deseja excluir o Pedido: ${pedido.id}?`,
+          title: 'Desativar Pedido',
+          message: `Tem certeza que deseja Desativar o Pedido: ${pedido.id}?`,
           askConfirmation: true,
         },
       })
@@ -135,6 +137,8 @@ export class PedidoComponent implements OnInit {
       .subscribe(() => {
         this.service.desativaPedido(pedido.id).subscribe(() => {
           this.snackbar.open('Pedido excluído com sucesso!', 'Ok');
+
+          this.atualizaLista();
         });
       });
   }
@@ -156,6 +160,8 @@ export class PedidoComponent implements OnInit {
       .subscribe((item: PedidoAlteracao) => {
         this.service.alteraPedido(item).subscribe(() => {
           this.snackbar.open('Pedido baixado com sucesso!', 'Ok');
+
+          this.atualizaLista();
         });
       });
   }

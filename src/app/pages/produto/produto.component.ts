@@ -46,7 +46,7 @@ export class ProdutoComponent implements OnInit {
       label: '',
       value: 'actionDelete',
       color: 'accent',
-      tooltipMessage: 'Excluir produto',
+      tooltipMessage: 'Desativar produto',
       isAction: true,
       icon: 'delete',
       action: (row: ProdutoInformacoes) => this.desativaProduto(row),
@@ -59,6 +59,8 @@ export class ProdutoComponent implements OnInit {
 
   getProdutos = (pagination: Pagination, filter: any) =>
     this.service?.getProdutos(pagination, filter);
+
+  atualizaLista = () => {};
 
   constructor(
     private headerService: HeaderService,
@@ -86,6 +88,8 @@ export class ProdutoComponent implements OnInit {
       .subscribe(() => {
         this.service.desativaProduto(produto.id).subscribe(() => {
           this.snackbar.open('Produto desativado com sucesso!', 'Ok');
+
+          this.atualizaLista();
         });
       });
   }

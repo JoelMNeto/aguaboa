@@ -59,7 +59,7 @@ export class ClienteComponent implements OnInit {
       label: '',
       value: 'actionDelete',
       color: 'accent',
-      tooltipMessage: 'Excluir cliente',
+      tooltipMessage: 'Desativar cliente',
       isAction: true,
       icon: 'delete',
       action: (row: ClienteInformacoes) => this.desativaCliente(row),
@@ -72,6 +72,8 @@ export class ClienteComponent implements OnInit {
 
   getClientes = (pagination: Pagination, filter: any) =>
     this.service?.getClientes(pagination, filter);
+
+  atualizaLista = () => {};
 
   constructor(
     private headerService: HeaderService,
@@ -99,6 +101,8 @@ export class ClienteComponent implements OnInit {
       .subscribe(() => {
         this.service.desativaCliente(cliente.id).subscribe(() => {
           this.snackbar.open('Cliente desativado com sucesso!', 'Ok');
+
+          this.atualizaLista();
         });
       });
   }

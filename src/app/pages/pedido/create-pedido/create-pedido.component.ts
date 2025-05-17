@@ -213,8 +213,8 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
     this.dialog
       .open(DialogComponent, {
         data: {
-          title: 'Excluir Item do Pedido',
-          message: `Tem certeza que deseja excluir o item com o produto: ${item.produtoId}?`,
+          title: 'Desativar Item do Pedido',
+          message: `Tem certeza que deseja desativar o item com o produto: ${item.produtoId}?`,
           askConfirmation: true,
         },
       })
