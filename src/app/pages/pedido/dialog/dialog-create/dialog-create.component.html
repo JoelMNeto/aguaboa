@@ -4,10 +4,14 @@
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
   <div class="form-content-container">
-    <mat-form-field>
-      <mat-label>Código do produto</mat-label>
-      <input type="text" matInput formControlName="produtoId" />
-    </mat-form-field>
+    <autocomplete
+      [label]="'Produto'"
+      [control]="getFormControl('produto')"
+      [options$]="produtoOptions$.bind(this)"
+      [displayFormat]="displayFormat"
+      [detailData]="detailData"
+    >
+    </autocomplete>
 
     <mat-form-field>
       <mat-label>Quantidade</mat-label>

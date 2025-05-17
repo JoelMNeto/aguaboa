@@ -2,10 +2,13 @@
   <div class="form-content-container content-cadastro-pedido">
     <div class="row">
       <div class="col-6">
-        <mat-form-field class="w-100">
-          <mat-label>Código do cliente</mat-label>
-          <input type="text" matInput formControlName="clienteId" />
-        </mat-form-field>
+        <autocomplete
+          [label]="'Cliente'"
+          [control]="getFormControl('cliente')"
+          [options$]="clienteOptions$.bind(this)"
+          [displayFormat]="displayFormat"
+          [detailData]="detailData">
+        </autocomplete>
 
         <mat-form-field class="w-100">
           <mat-label>Valor pago</mat-label>

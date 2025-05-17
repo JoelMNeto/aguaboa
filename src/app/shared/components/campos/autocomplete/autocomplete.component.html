@@ -1,0 +1,19 @@
+<mat-form-field class="w-100">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    type="text"
+    matInput
+    [formControl]="control"
+    [matAutocomplete]="auto"
+  />
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFormat">
+    @for (option of filteredOptions; track option) {
+    <mat-option [value]="option">
+      <div class="mt-2 mb-2 d-flex flex-column">
+        <span style="font-weight: 500;">{{ displayFormat(option) }}</span>
+        <small style="font-size: small;">{{ detailData(option) }}</small>
+      </div>
+    </mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>

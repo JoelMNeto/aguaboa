@@ -23,9 +23,12 @@ import {
 } from '../../../shared/interfaces/pedido.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { DumpListComponent } from '../../../shared/components/dump-list/dump-list.component';
-import { ListColumn } from '../../../shared/interfaces/list-component.interface';
+import { ListColumn, Pagination } from '../../../shared/interfaces/list-component.interface';
 import { DialogCreateComponent } from '../dialog/dialog-create/dialog-create.component';
 import { UtilsService } from '../../../shared/services/utils.service';
+import { AutocompleteComponent } from '../../../shared/components/campos/autocomplete/autocomplete.component';
+import { ClienteService } from '../../../shared/services/cliente.service';
+import { ClienteInformacoes } from '../../../shared/interfaces/cliente.interface';
 
 @Component({
   selector: 'app-create-pedido',
@@ -37,6 +40,7 @@ import { UtilsService } from '../../../shared/services/utils.service';
     MatButtonModule,
     MatSelectModule,
     DumpListComponent,
+    AutocompleteComponent,
   ],
   templateUrl: './create-pedido.component.html',
   styleUrl: './create-pedido.component.scss',
@@ -90,10 +94,19 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
 
   itensPeidoList: ItemPedidoCadastro[] = [];
 
+  clienteOptions$ = (pagination: Pagination, filter: any) =>
+    this.clienteService.getClientes(pagination, filter);
+
+  displayFormat = (cliente: ClienteInformacoes) => cliente ? `${cliente.id} - ${cliente.nome}` : '';
+
+  detailData = (cliente: ClienteInformacoes) => cliente.endereco ?
+    `${cliente.endereco?.logradouro}, ${cliente.endereco?.numero}; ${cliente.endereco?.bairro || ''}` : '';
+
   constructor(
     private headerService: HeaderService,
     private router: Router,
     private service: PedidoService,
+    private clienteService: ClienteService,
     private snackbar: MatSnackBar,
     private dialog: MatDialog,
     private utilsService: UtilsService,
@@ -169,11 +182,15 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
     this.navigateToHome();
   }
 
+  getFormControl(control: string): FormControl {
+    return (this.form.get(control) as FormControl);
+  }
+
   private buildPedidoLancamentoDTO(form: FormGroup): PedidoLancamento {
     let getFormValue = (control: string) => form.get(control)?.value;
 
     return {
-      clienteId: getFormValue('clienteId'),
+      clienteId: getFormValue('cliente')?.id,
       valorPago: getFormValue('valorPago'),
       frete: getFormValue('frete'),
       tipo: getFormValue('tipo'),
@@ -184,7 +201,7 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
 
   private getEmptyForm(): FormGroup {
     return new FormGroup({
-      clienteId: new FormControl<string>('', {
+      cliente: new FormControl<{} | null>(null, {
         nonNullable: true,
         validators: Validators.required,
       }),

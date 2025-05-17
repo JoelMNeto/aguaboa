@@ -22,6 +22,10 @@ import { MatInputModule } from '@angular/material/input';
 import { DialogComponent } from '../../../../shared/components/dialog/dialog.component';
 import { ItemPedidoCadastro } from '../../../../shared/interfaces/pedido.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AutocompleteComponent } from '../../../../shared/components/campos/autocomplete/autocomplete.component';
+import { ProdutoService } from '../../../../shared/services/produto.service';
+import { Pagination } from '../../../../shared/interfaces/list-component.interface';
+import { ProdutoInformacoes } from '../../../../shared/interfaces/produto.interface';
 
 @Component({
   selector: 'app-dialog-create',
@@ -34,6 +38,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    AutocompleteComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dialog-create.component.html',
@@ -49,7 +54,14 @@ export class DialogCreateComponent implements OnInit {
     itensPeidoList: ItemPedidoCadastro[]
   } = inject(MAT_DIALOG_DATA);
 
-  constructor(private snackbar: MatSnackBar) {}
+  produtoOptions$ = (pagination: Pagination, filter: any) =>
+      this.produtoService.getProdutos(pagination, filter);
+  
+  displayFormat = (produto: ProdutoInformacoes) => produto ? `${produto.id} - ${produto.nome}` : '';
+
+  detailData = (produto: ProdutoInformacoes) => produto?.marca ?? '';
+
+  constructor(private snackbar: MatSnackBar, private produtoService: ProdutoService) {}
 
   ngOnInit(): void {
     this.form = this.getEmptyForm();
@@ -75,9 +87,13 @@ export class DialogCreateComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  getFormControl(control: string): FormControl {
+    return (this.form.get(control) as FormControl);
+  }
+
   private getEmptyForm(): FormGroup {
     return new FormGroup({
-      produtoId: new FormControl<string>('', {
+      produto: new FormControl<{} | null>(null, {
         nonNullable: true,
         validators: Validators.required,
       }),
@@ -97,7 +113,7 @@ export class DialogCreateComponent implements OnInit {
     let getFormValue = (control: string) => form.get(control)?.value;
 
     return {
-      produtoId: Number.parseInt(getFormValue('produtoId')) || 0,
+      produtoId: getFormValue('produto').id,
       quantidade: Number.parseInt(getFormValue('quantidade')) || 0,
       desconto: Number.parseFloat(getFormValue('desconto')) || 0,
       precoUnitario: Number.parseFloat(getFormValue('precoUnitario')) || 0
