@@ -24,13 +24,17 @@ import {
 } from '../../../shared/interfaces/pedido.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { DumpListComponent } from '../../../shared/components/dump-list/dump-list.component';
-import { ListColumn, Pagination } from '../../../shared/interfaces/list-component.interface';
+import {
+  ListColumn,
+  Pagination,
+} from '../../../shared/interfaces/list-component.interface';
 import { DialogCreateComponent } from '../dialog/dialog-create/dialog-create.component';
 import { UtilsService } from '../../../shared/services/utils.service';
 import { AutocompleteComponent } from '../../../shared/components/campos/autocomplete/autocomplete.component';
 import { ClienteService } from '../../../shared/services/cliente.service';
 import { ClienteInformacoes } from '../../../shared/interfaces/cliente.interface';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-create-pedido',
@@ -44,6 +48,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
     DumpListComponent,
     AutocompleteComponent,
     CurrencyMaskModule,
+    MatCardModule,
   ],
   templateUrl: './create-pedido.component.html',
   styleUrl: './create-pedido.component.scss',
@@ -66,7 +71,7 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  formasDePagamento = FORMAS_PAGAMENTO; 
+  formasDePagamento = FORMAS_PAGAMENTO;
 
   itemPedidoColumns: ListColumn[] = [
     {
@@ -107,10 +112,17 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
   clienteOptions$ = (pagination: Pagination, filter: any) =>
     this.clienteService.getClientes(pagination, filter);
 
-  displayFormat = (cliente: ClienteInformacoes) => cliente ? `${cliente.id} - ${cliente.nome}` : '';
+  displayFormat = (cliente: ClienteInformacoes) =>
+    cliente ? `${cliente.id} - ${cliente.nome}` : '';
 
-  detailData = (cliente: ClienteInformacoes) => cliente.endereco ?
-    `${cliente.endereco?.logradouro}, ${cliente.endereco?.numero}; ${cliente.endereco?.bairro || ''}` : '';
+  detailData = (cliente: ClienteInformacoes) =>
+    cliente.endereco
+      ? `${cliente.endereco?.logradouro}, ${cliente.endereco?.numero}; ${
+          cliente.endereco?.bairro || ''
+        }`
+      : '';
+
+  valorPedido: string = 'R$ 0,00';
 
   constructor(
     private headerService: HeaderService,
@@ -119,13 +131,17 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
     private clienteService: ClienteService,
     private snackbar: MatSnackBar,
     private dialog: MatDialog,
-    private utilsService: UtilsService,
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
     this.headerService.setPageTitle('Novo Pedido');
 
     this.form = this.getEmptyForm();
+
+    this.getFormControl('frete').valueChanges.subscribe(() =>
+      this.calculaTotalPedido()
+    );
   }
 
   ngAfterViewInit(): void {
@@ -146,13 +162,12 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
       })
       .afterClosed()
       .pipe(
-        filter(
-          (item: DisplayItemPedido) => item !== null && item !== undefined
-        )
+        filter((item: DisplayItemPedido) => item !== null && item !== undefined)
       )
       .subscribe((item: DisplayItemPedido) => {
         this.itensPeidoList = [...this.itensPeidoList, item];
 
+        this.calculaTotalPedido();
         this.atualizaItens();
       });
   }
@@ -193,7 +208,22 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
   }
 
   getFormControl(control: string): FormControl {
-    return (this.form.get(control) as FormControl);
+    return this.form.get(control) as FormControl;
+  }
+
+  private calculaTotalPedido(itensList = this.itensPeidoList) {
+    if (!itensList || itensList.length <= 0) {
+      this.valorPedido = this.utilsService.formataValorMonetario(0);
+    }
+
+    this.valorPedido = this.utilsService.formataValorMonetario(
+      itensList
+        .map(
+          (item) => (item.precoUnitario - item.desconto) * item.quantidade || 0
+        )
+        .reduce((acc, crr) => acc + crr) +
+        (Number.parseFloat(this.getFormControl('frete').value) || 0)
+    );
   }
 
   private buildPedidoLancamentoDTO(form: FormGroup): PedidoLancamento {
@@ -201,7 +231,7 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
 
     return {
       clienteId: getFormValue('cliente')?.id,
-      valorPago:  Number.parseFloat(getFormValue('valorPago')),
+      valorPago: Number.parseFloat(getFormValue('valorPago')),
       frete: Number.parseFloat(getFormValue('frete')),
       tipo: getFormValue('tipo'),
       formaPagamento: getFormValue('formaPagamento'),
@@ -253,6 +283,7 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
         );
 
         this.atualizaItens();
+        this.calculaTotalPedido();
       });
   }
 

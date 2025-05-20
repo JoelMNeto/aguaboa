@@ -10,30 +10,6 @@
           [detailData]="detailData"
         >
         </autocomplete>
-
-        <mat-form-field class="w-100">
-          <mat-label>Valor pago</mat-label>
-          <input
-            matInput
-            type="text"
-            currencyMask
-            formControlName="valorPago"
-            placeholder="0,00"
-            [options]="currencyMask"
-          />
-        </mat-form-field>
-
-        <mat-form-field class="w-100">
-          <mat-label>Valor do frete</mat-label>
-          <input
-            matInput
-            type="text"
-            currencyMask
-            formControlName="frete"
-            placeholder="0,00"
-            [options]="currencyMask"
-          />
-        </mat-form-field>
       </div>
 
       <div class="col-6">
@@ -47,7 +23,24 @@
             }
           </mat-select>
         </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field class="w-100">
+          <mat-label>Valor pago</mat-label>
+          <input
+            matInput
+            type="text"
+            currencyMask
+            formControlName="valorPago"
+            placeholder="0,00"
+            [options]="currencyMask"
+          />
+        </mat-form-field>
+      </div>
 
+      <div class="col-6">
         <mat-form-field class="w-100">
           <mat-label>Forma de pagamento</mat-label>
           <mat-select formControlName="formaPagamento">
@@ -60,6 +53,21 @@
         </mat-form-field>
       </div>
     </div>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field class="w-100">
+          <mat-label>Valor do frete</mat-label>
+          <input
+            matInput
+            type="text"
+            currencyMask
+            formControlName="frete"
+            placeholder="0,00"
+            [options]="currencyMask"
+          />
+        </mat-form-field>
+      </div>
+    </div>
 
     <dump-list
       [displayedColumns]="itemPedidoColumns"
@@ -68,6 +76,15 @@
       [buttonName]="'Adicionar item ao pedido'"
     >
     </dump-list>
+
+    <mat-card class="mb-2" appearance="outlined">
+      <div class="d-flex justify-content-end" style="font-size: medium; font-weight: 500;">
+        <mat-card-content>
+          <span class="color-primary">Total do pedido: </span>
+          <span>{{ valorPedido }}</span>
+        </mat-card-content>
+      </div>
+    </mat-card>
   </div>
 
   <div class="mt-2 d-flex justify-content-end" style="width: 900px">

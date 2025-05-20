@@ -46,8 +46,8 @@ export interface PedidoLancamento {
 export interface ItemPedidoCadastro {
   produtoId: number;
   quantidade: number;
-  desconto?: number;
-  precoUnitario?: number;
+  desconto: number;
+  precoUnitario: number;
 }
 
 export interface DisplayItemPedido extends ItemPedidoCadastro {
