@@ -85,6 +85,11 @@ export class DialogCreateComponent implements OnInit {
       return;
     }
 
+    if (Number.parseInt(this.getFormControl('quantidade').value) <= 0) {
+      this.snackbar.open('Quantidade inválida!');
+      return;
+    }
+
     let objToSave = this.buildItemPedidoCadastroDTO(this.form);
 
     if (
