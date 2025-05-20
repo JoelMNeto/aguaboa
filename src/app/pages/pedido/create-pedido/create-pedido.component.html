@@ -76,33 +76,35 @@
       [buttonName]="'Adicionar item ao pedido'"
     >
     </dump-list>
+  </div>
 
-    <mat-card class="mb-2" appearance="outlined">
-      <div class="d-flex justify-content-end" style="font-size: medium; font-weight: 500;">
+  <div class="mt-2 d-flex justify-content-between align-items-center" style="width: 900px">
+    <mat-card appearance="outlined">
+      <div style="font-size: medium; font-weight: 500">
         <mat-card-content>
-          <span class="color-primary">Total do pedido: </span>
+          <span>Total do pedido: </span>
           <span>{{ valorPedido }}</span>
         </mat-card-content>
       </div>
     </mat-card>
-  </div>
 
-  <div class="mt-2 d-flex justify-content-end" style="width: 900px">
-    <button
-      style="margin-right: 5px"
-      mat-raised-button
-      color="accent"
-      (click)="onCancel()"
-    >
-      Cancelar
-    </button>
-    <button
-      type="submit"
-      mat-raised-button
-      color="primary"
-      (click)="onSubmit()"
-    >
-      Salvar
-    </button>
+    <div>
+      <button
+        style="margin-right: 5px"
+        mat-raised-button
+        color="accent"
+        (click)="onCancel()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        (click)="onSubmit()"
+      >
+        Salvar
+      </button>
+    </div>
   </div>
 </form>
