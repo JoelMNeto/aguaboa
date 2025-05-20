@@ -15,17 +15,31 @@
 
     <mat-form-field>
       <mat-label>Quantidade</mat-label>
-      <input type="text" matInput formControlName="quantidade" />
+      <input matInput formControlName="quantidade" />
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Desconto</mat-label>
-      <input type="text" matInput formControlName="desconto" />
+      <input
+        matInput
+        type="text"
+        formControlName="desconto"
+        currencyMask
+        placeholder="0,00"
+        [options]="currencyMask"
+      />
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Preço unitário</mat-label>
-      <input type="text" matInput formControlName="precoUnitario" />
+      <input
+        type="text"
+        matInput
+        formControlName="precoUnitario"
+        currencyMask
+        placeholder="0,00"
+        [options]="currencyMask"
+      />
     </mat-form-field>
   </div>
 </form>

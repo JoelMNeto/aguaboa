@@ -10,7 +10,14 @@ import { menu } from './bean';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HeaderComponent, SidenavComponent, MatListModule, RouterModule, MatIconModule, MatListModule],
+  imports: [
+    HeaderComponent,
+    SidenavComponent,
+    MatListModule,
+    RouterModule,
+    MatIconModule,
+    MatListModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

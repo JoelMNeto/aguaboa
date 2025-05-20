@@ -26,6 +26,8 @@ import { AutocompleteComponent } from '../../../../shared/components/campos/auto
 import { ProdutoService } from '../../../../shared/services/produto.service';
 import { Pagination } from '../../../../shared/interfaces/list-component.interface';
 import { ProdutoInformacoes } from '../../../../shared/interfaces/produto.interface';
+import { CURRENCY_MASK_OPTIONS } from '../../../../shared/interfaces/pedido.interface';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
   selector: 'app-dialog-create',
@@ -38,7 +40,8 @@ import { ProdutoInformacoes } from '../../../../shared/interfaces/produto.interf
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    AutocompleteComponent
+    AutocompleteComponent,
+    CurrencyMaskModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dialog-create.component.html',
@@ -53,6 +56,8 @@ export class DialogCreateComponent implements OnInit {
     title: string,
     itensPeidoList: ItemPedidoCadastro[]
   } = inject(MAT_DIALOG_DATA);
+
+  currencyMask = CURRENCY_MASK_OPTIONS;
 
   produtoOptions$ = (pagination: Pagination, filter: any) =>
       this.produtoService.getProdutos(pagination, filter);

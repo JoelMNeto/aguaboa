@@ -1,3 +1,4 @@
+import { CurrencyMaskConfig } from 'ng2-currency-mask';
 import { ClienteInformacoes } from './cliente.interface';
 import { ProdutoInformacoes } from './produto.interface';
 
@@ -55,20 +56,20 @@ export interface PedidoAlteracao {
 }
 
 export enum StatusEnum {
-  PAGO = "PAGO",
-  EM_ABERTO = "EM_ABERTO",
+  PAGO = 'PAGO',
+  EM_ABERTO = 'EM_ABERTO',
 }
 
 export enum TipoPedidoEnum {
-  ENTREGA = "ENTREGA",
-  RETIRADA = "RETIRADA",
+  ENTREGA = 'ENTREGA',
+  RETIRADA = 'RETIRADA',
 }
 
 export enum FormaPagamentoEnum {
-  CARTAO = "CARTAO",
-  DINHEIRO = "DINHEIRO",
-  SALDO = "SALDO",
-  PIX = "PIX",
+  CARTAO = 'CARTAO',
+  DINHEIRO = 'DINHEIRO',
+  SALDO = 'SALDO',
+  PIX = 'PIX',
 }
 
 export const FORMAS_PAGAMENTO = [
@@ -111,3 +112,13 @@ export const STATUS_PEDIDO = [
     value: StatusEnum.PAGO,
   },
 ];
+
+export const CURRENCY_MASK_OPTIONS: CurrencyMaskConfig = {
+  align: 'right',
+  allowNegative: false,
+  decimal: ',',
+  precision: 2,
+  prefix: 'R$ ',
+  suffix: '',
+  thousands: '.',
+};

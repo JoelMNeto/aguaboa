@@ -20,6 +20,7 @@ import {
   PedidoLancamento,
   TipoPedidoEnum,
   FORMAS_PAGAMENTO,
+  CURRENCY_MASK_OPTIONS,
 } from '../../../shared/interfaces/pedido.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { DumpListComponent } from '../../../shared/components/dump-list/dump-list.component';
@@ -29,6 +30,7 @@ import { UtilsService } from '../../../shared/services/utils.service';
 import { AutocompleteComponent } from '../../../shared/components/campos/autocomplete/autocomplete.component';
 import { ClienteService } from '../../../shared/services/cliente.service';
 import { ClienteInformacoes } from '../../../shared/interfaces/cliente.interface';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
   selector: 'app-create-pedido',
@@ -41,6 +43,7 @@ import { ClienteInformacoes } from '../../../shared/interfaces/cliente.interface
     MatSelectModule,
     DumpListComponent,
     AutocompleteComponent,
+    CurrencyMaskModule,
   ],
   templateUrl: './create-pedido.component.html',
   styleUrl: './create-pedido.component.scss',
@@ -91,6 +94,8 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
       action: (row: ItemPedidoCadastro) => this.excluiItemPedido(row),
     },
   ];
+
+  currencyMask = CURRENCY_MASK_OPTIONS;
 
   itensPeidoList: ItemPedidoCadastro[] = [];
 
@@ -191,8 +196,8 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
 
     return {
       clienteId: getFormValue('cliente')?.id,
-      valorPago: getFormValue('valorPago'),
-      frete: getFormValue('frete'),
+      valorPago:  Number.parseFloat(getFormValue('valorPago')),
+      frete: Number.parseFloat(getFormValue('frete')),
       tipo: getFormValue('tipo'),
       formaPagamento: getFormValue('formaPagamento'),
       itens: this.itensPeidoList,

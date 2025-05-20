@@ -16,6 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ProdutoCadastro } from '../../../shared/interfaces/produto.interface';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { CURRENCY_MASK_OPTIONS } from '../../../shared/interfaces/pedido.interface';
 
 @Component({
   selector: 'app-create-produto',
@@ -25,12 +27,15 @@ import { ProdutoCadastro } from '../../../shared/interfaces/produto.interface';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    CurrencyMaskModule,
   ],
   templateUrl: './create-produto.component.html',
   styleUrl: './create-produto.component.scss',
 })
 export class CreateProdutoComponent {
   form!: FormGroup;
+
+  currencyMask = CURRENCY_MASK_OPTIONS;
 
   constructor(
     private headerService: HeaderService,
@@ -87,7 +92,7 @@ export class CreateProdutoComponent {
     return {
       nome: getFormValue('nome'),
       marca: getFormValue('marca'),
-      preco: getFormValue('preco'),
+      preco: Number.parseFloat(getFormValue('preco')),
     };
   }
 

@@ -12,7 +12,9 @@
 
     <mat-form-field>
       <mat-label>Preço</mat-label>
-      <input type="text" matInput formControlName="preco" />
+      <input type="text" matInput formControlName="preco" currencyMask
+        placeholder="0,00"
+        [options]="currencyMask"/>
     </mat-form-field>
   </div>
 

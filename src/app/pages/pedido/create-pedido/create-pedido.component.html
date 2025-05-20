@@ -7,17 +7,32 @@
           [control]="getFormControl('cliente')"
           [options$]="clienteOptions$.bind(this)"
           [displayFormat]="displayFormat"
-          [detailData]="detailData">
+          [detailData]="detailData"
+        >
         </autocomplete>
 
         <mat-form-field class="w-100">
           <mat-label>Valor pago</mat-label>
-          <input type="text" matInput formControlName="valorPago" />
+          <input
+            matInput
+            type="text"
+            currencyMask
+            formControlName="valorPago"
+            placeholder="0,00"
+            [options]="currencyMask"
+          />
         </mat-form-field>
 
         <mat-form-field class="w-100">
           <mat-label>Valor do frete</mat-label>
-          <input type="text" matInput formControlName="frete" />
+          <input
+            matInput
+            type="text"
+            currencyMask
+            formControlName="frete"
+            placeholder="0,00"
+            [options]="currencyMask"
+          />
         </mat-form-field>
       </div>
 
