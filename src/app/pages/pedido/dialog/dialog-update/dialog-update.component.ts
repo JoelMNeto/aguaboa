@@ -17,9 +17,11 @@ import { MatInputModule } from '@angular/material/input';
 import { DialogComponent } from '../../../../shared/components/dialog/dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
+  CURRENCY_MASK_OPTIONS,
   PedidoAlteracao,
   PedidoInformacoes,
 } from '../../../../shared/interfaces/pedido.interface';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
   selector: 'app-dialog-update',
@@ -32,6 +34,7 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    CurrencyMaskModule,
   ],
   templateUrl: './dialog-update.component.html',
   styleUrl: './dialog-update.component.scss',
@@ -45,6 +48,8 @@ export class DialogUpdateComponent implements OnInit {
     title: string;
     pedido: PedidoInformacoes;
   } = inject(MAT_DIALOG_DATA);
+
+  currencyMask = CURRENCY_MASK_OPTIONS;
 
   constructor(private snackbar: MatSnackBar) {}
 
