@@ -16,11 +16,11 @@ import { DialogComponent } from '../../../shared/components/dialog/dialog.compon
 import { HeaderService } from '../../../shared/services/header.service';
 import { PedidoService } from '../../../shared/services/pedido.service';
 import {
-  ItemPedidoCadastro,
   PedidoLancamento,
   TipoPedidoEnum,
   FORMAS_PAGAMENTO,
   CURRENCY_MASK_OPTIONS,
+  DisplayItemPedido,
 } from '../../../shared/interfaces/pedido.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { DumpListComponent } from '../../../shared/components/dump-list/dump-list.component';
@@ -49,8 +49,8 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
   styleUrl: './create-pedido.component.scss',
 })
 export class CreatePedidoComponent implements OnInit, AfterViewInit {
-  itensPedido$: Subject<ItemPedidoCadastro[]> = new Subject<
-    ItemPedidoCadastro[]
+  itensPedido$: Subject<DisplayItemPedido[]> = new Subject<
+    DisplayItemPedido[]
   >();
 
   form!: FormGroup;
@@ -70,8 +70,8 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
 
   itemPedidoColumns: ListColumn[] = [
     {
-      label: 'Código do produto',
-      value: 'produtoId',
+      label: 'Produto',
+      value: 'produtoNome',
     },
     {
       label: 'Quantidade',
@@ -88,16 +88,21 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
       format: this.utilsService.formataValorMonetario,
     },
     {
+      label: 'Valor do item',
+      value: 'valorItem',
+      format: this.utilsService.formataValorMonetario,
+    },
+    {
       label: '',
       value: 'action',
       icon: 'delete',
-      action: (row: ItemPedidoCadastro) => this.excluiItemPedido(row),
+      action: (row: DisplayItemPedido) => this.excluiItemPedido(row),
     },
   ];
 
   currencyMask = CURRENCY_MASK_OPTIONS;
 
-  itensPeidoList: ItemPedidoCadastro[] = [];
+  itensPeidoList: DisplayItemPedido[] = [];
 
   clienteOptions$ = (pagination: Pagination, filter: any) =>
     this.clienteService.getClientes(pagination, filter);
@@ -142,10 +147,10 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .pipe(
         filter(
-          (item: ItemPedidoCadastro) => item !== null && item !== undefined
+          (item: DisplayItemPedido) => item !== null && item !== undefined
         )
       )
-      .subscribe((item: ItemPedidoCadastro) => {
+      .subscribe((item: DisplayItemPedido) => {
         this.itensPeidoList = [...this.itensPeidoList, item];
 
         this.atualizaItens();
@@ -231,7 +236,7 @@ export class CreatePedidoComponent implements OnInit, AfterViewInit {
     this.itensPedido$.next(this.itensPeidoList);
   }
 
-  private excluiItemPedido(item: ItemPedidoCadastro) {
+  private excluiItemPedido(item: DisplayItemPedido) {
     this.dialog
       .open(DialogComponent, {
         data: {

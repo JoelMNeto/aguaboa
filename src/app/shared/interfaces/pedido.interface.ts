@@ -50,6 +50,12 @@ export interface ItemPedidoCadastro {
   precoUnitario?: number;
 }
 
+export interface DisplayItemPedido extends ItemPedidoCadastro {
+  produtoNome: string;
+  produtoMarca: string;
+  valorItem: number;
+}
+
 export interface PedidoAlteracao {
   id: number;
   valorPago: number;

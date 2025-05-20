@@ -20,7 +20,10 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DialogComponent } from '../../../../shared/components/dialog/dialog.component';
-import { ItemPedidoCadastro } from '../../../../shared/interfaces/pedido.interface';
+import {
+  DisplayItemPedido,
+  ItemPedidoCadastro,
+} from '../../../../shared/interfaces/pedido.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AutocompleteComponent } from '../../../../shared/components/campos/autocomplete/autocomplete.component';
 import { ProdutoService } from '../../../../shared/services/produto.service';
@@ -53,20 +56,24 @@ export class DialogCreateComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<DialogComponent>);
 
   data: {
-    title: string,
-    itensPeidoList: ItemPedidoCadastro[]
+    title: string;
+    itensPeidoList: ItemPedidoCadastro[];
   } = inject(MAT_DIALOG_DATA);
 
   currencyMask = CURRENCY_MASK_OPTIONS;
 
   produtoOptions$ = (pagination: Pagination, filter: any) =>
-      this.produtoService.getProdutos(pagination, filter);
-  
-  displayFormat = (produto: ProdutoInformacoes) => produto ? `${produto.id} - ${produto.nome}` : '';
+    this.produtoService.getProdutos(pagination, filter);
+
+  displayFormat = (produto: ProdutoInformacoes) =>
+    produto ? `${produto.id} - ${produto.nome}` : '';
 
   detailData = (produto: ProdutoInformacoes) => produto?.marca ?? '';
 
-  constructor(private snackbar: MatSnackBar, private produtoService: ProdutoService) {}
+  constructor(
+    private snackbar: MatSnackBar,
+    private produtoService: ProdutoService
+  ) {}
 
   ngOnInit(): void {
     this.form = this.getEmptyForm();
@@ -80,7 +87,11 @@ export class DialogCreateComponent implements OnInit {
 
     let objToSave = this.buildItemPedidoCadastroDTO(this.form);
 
-    if (this.data?.itensPeidoList.map(i => i.produtoId).includes(objToSave.produtoId)) {
+    if (
+      this.data?.itensPeidoList
+        .map((i) => i.produtoId)
+        .includes(objToSave.produtoId)
+    ) {
       this.snackbar.open('Este produto já foi adicionado ao pedido!');
       return;
     }
@@ -93,7 +104,7 @@ export class DialogCreateComponent implements OnInit {
   }
 
   getFormControl(control: string): FormControl {
-    return (this.form.get(control) as FormControl);
+    return this.form.get(control) as FormControl;
   }
 
   private getEmptyForm(): FormGroup {
@@ -114,14 +125,27 @@ export class DialogCreateComponent implements OnInit {
     });
   }
 
-  private buildItemPedidoCadastroDTO(form: FormGroup): ItemPedidoCadastro {
+  private buildItemPedidoCadastroDTO(form: FormGroup): DisplayItemPedido {
     let getFormValue = (control: string) => form.get(control)?.value;
 
+    let produto: ProdutoInformacoes = getFormValue('produto');
+
+    let precoUnitario = Number.parseFloat(getFormValue('precoUnitario'));
+
+    let preco = precoUnitario > 0 ? precoUnitario : produto?.preco;
+
+    let quantidade = Number.parseInt(getFormValue('quantidade')) ?? 0;
+
+    let desconto = Number.parseFloat(getFormValue('desconto')) ?? 0;
+
     return {
-      produtoId: getFormValue('produto').id,
-      quantidade: Number.parseInt(getFormValue('quantidade')) || 0,
-      desconto: Number.parseFloat(getFormValue('desconto')) || 0,
-      precoUnitario: Number.parseFloat(getFormValue('precoUnitario')) || 0
+      produtoId: produto?.id,
+      produtoNome: produto?.nome,
+      produtoMarca: produto?.marca,
+      quantidade,
+      desconto,
+      precoUnitario: preco,
+      valorItem: (preco - desconto) * quantidade,
     };
   }
 }
