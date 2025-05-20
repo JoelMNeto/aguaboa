@@ -130,13 +130,11 @@ export class DialogCreateComponent implements OnInit {
 
     let produto: ProdutoInformacoes = getFormValue('produto');
 
-    let precoUnitario = Number.parseFloat(getFormValue('precoUnitario'));
+    let precoUnitario = Number.parseFloat(getFormValue('precoUnitario')) || produto?.preco;
 
-    let preco = precoUnitario > 0 ? precoUnitario : produto?.preco;
+    let quantidade = Number.parseInt(getFormValue('quantidade')) || 0;
 
-    let quantidade = Number.parseInt(getFormValue('quantidade')) ?? 0;
-
-    let desconto = Number.parseFloat(getFormValue('desconto')) ?? 0;
+    let desconto = Number.parseFloat(getFormValue('desconto')) || 0;
 
     return {
       produtoId: produto?.id,
@@ -144,8 +142,8 @@ export class DialogCreateComponent implements OnInit {
       produtoMarca: produto?.marca,
       quantidade,
       desconto,
-      precoUnitario: preco,
-      valorItem: (preco - desconto) * quantidade,
+      precoUnitario,
+      valorItem: (precoUnitario - desconto) * quantidade,
     };
   }
 }
