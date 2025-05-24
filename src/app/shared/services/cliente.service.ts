@@ -7,7 +7,7 @@ import {
 } from '../interfaces/cliente.interface';
 import { HttpService } from './http.service';
 
-const endpoint = 'api/clientes';
+const endpoint = '/clientes';
 
 @Injectable({
   providedIn: 'root',

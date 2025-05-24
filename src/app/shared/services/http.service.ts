@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpConfig } from '../interfaces/http.interface';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../components/dialog/dialog.component';
 
+const URL = 'https://aguaboa-servicos.onrender.com';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +13,9 @@ export class HttpService {
   constructor(private http: HttpClient, private dialog: MatDialog) {}
 
   get<T>(config: HttpConfig): Observable<T> {
-    return this.http.get<T>(config?.endpoint, {
+    const endpoint = URL + config?.endpoint;
+
+    return this.http.get<T>(endpoint, {
       params: config.params,
       headers: config.headers,
     })
@@ -26,8 +29,10 @@ export class HttpService {
   }
 
   post<T>(config: HttpConfig): Observable<T> {
+    const endpoint = URL + config?.endpoint;
+
     return this.http
-      .post<T>(config?.endpoint, config?.body, {
+      .post<T>(endpoint, config?.body, {
         headers: config.headers,
       })
       .pipe(
@@ -40,8 +45,10 @@ export class HttpService {
   }
 
   put<T>(config: HttpConfig): Observable<T> {
+    const endpoint = URL + config?.endpoint;
+
     return this.http
-      .put<T>(config?.endpoint, config?.body, {
+      .put<T>(endpoint, config?.body, {
         headers: config.headers,
       })
       .pipe(
@@ -54,7 +61,9 @@ export class HttpService {
   }
 
   delete<T>(config: HttpConfig): Observable<T> {
-    return this.http.delete<T>(config?.endpoint, {
+    const endpoint = URL + config?.endpoint;
+
+    return this.http.delete<T>(endpoint, {
       headers: config?.headers,
     })
     .pipe(
