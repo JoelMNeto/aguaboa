@@ -4,7 +4,7 @@ import { Pagination } from '../interfaces/list-component.interface';
 import { HttpService } from './http.service';
 import { PedidoAlteracao, PedidoInformacoes, PedidoLancamento } from '../interfaces/pedido.interface';
 
-const endpoint = 'api/pedidos';
+const endpoint = '/pedidos';
 
 @Injectable({
   providedIn: 'root',

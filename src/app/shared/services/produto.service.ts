@@ -4,7 +4,7 @@ import { ClienteFiltros } from '../interfaces/cliente.interface';
 import { Pagination } from '../interfaces/list-component.interface';
 import { ProdutoCadastro, ProdutoInformacoes } from '../interfaces/produto.interface';
 
-const endpoint = 'api/produtos';
+const endpoint = '/produtos';
 
 @Injectable({
   providedIn: 'root'
